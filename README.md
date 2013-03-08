@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 justjs
 ======
 
@@ -12,3 +13,7 @@ You can override anything in 'options' in 'config-local.js' (see config-local-ex
 This is a work in progress. It's [running in production at justjs.com](http://justjs.com/) but lots of functionality is yet to come. See the commit log or just follow the blog for current status.
 
 Released under the MIT license.
+=======
+refresh-convo
+=============
+>>>>>>> 45f745a008d1c034e18e18f454f196e2f2152658
