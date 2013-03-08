@@ -1,0 +1,9 @@
+
+<% if (slots.user) { %>
+	<li class="<%= (slots.page == 'home') ? 'active' : '' %>">
+	  <a href="/">Home</a> 
+	</li>
+	<li class="<%= (slots.page == 'chat') ? 'active' : '' %>">
+	  <a href="/chat">Chat Room</a> 
+	</li>
+<% } %>

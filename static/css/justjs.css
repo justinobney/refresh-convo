@@ -1,0 +1,43 @@
+h1
+{
+	padding-bottom: 10px;
+}
+
+.fontello[class^="icon-"], .fontello[class*=" icon-"] {
+	width: initial;
+}
+
+.btn-block {
+	display: block;
+	width: 100% !important;
+	padding-left: 0;
+	padding-right: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	margin-top: 0 !important;
+}
+
+.user-name {
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #bb0001;
+	background-image: -moz-linear-gradient(top, #cf0001, #9c0001);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cf0001), to(#9c0001));
+	background-image: -webkit-linear-gradient(top, #cf0001, #9c0001);
+	background-image: -o-linear-gradient(top, #cf0001, #9c0001);
+	background-image: linear-gradient(to bottom, #cf0001, #9c0001);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcf0001', endColorstr='#ff9c0001', GradientType=0);
+	border-color: #9c0001 #9c0001 #500001;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	text-align: center;
+}
+
+.user-name:hover {
+	color: #ffffff;
+}
