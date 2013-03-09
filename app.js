@@ -1,8 +1,8 @@
 var _ = require('underscore');
 var express = require('express');
-var view;
 var passport = require('passport');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var view;
 
 module.exports = {
   init: function(context, callback) {
@@ -31,6 +31,10 @@ module.exports = {
     // nice chrome on the login page
     configurePassport();
 
+    // ================================================
+    // ==================   ROUTES    =================
+    // ================================================
+
     // Deliver a list of posts when we see just '/'
     app.get('/', function(req, res) {
       page(req, res, 'index', {});
@@ -38,6 +42,35 @@ module.exports = {
 
     app.get('/chat', ensureLoggedIn('/'), function(req, res) {
       page(req, res, 'chat', {slots : {page: 'chat'}});
+    });
+
+    app.post('/user/create', function(req, res){
+      var result = handleUserCreate(req.body);
+      if (!result.success) {
+        
+        req.sesion = req.session || {};
+        req.session.error = result.message;
+
+        page(req, res, 'index', {});
+      } else {
+        context.db.createUser({
+            username: req.body['username'],
+            password: req.body['password'],
+            email: req.body['email']
+          },
+          function(err, response, body, success) {
+            if ( !success ) {
+              req.session.error = "Something went wrong..";
+              res.redirect('/');
+            } else {
+              var user = transformParseUserToProfile(body);
+              req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                return res.redirect('/');
+              });
+            }
+        });
+      }
     });
 
     app.get('*', function(req, res) {
@@ -51,6 +84,30 @@ module.exports = {
     function notFound(res)
     {
       res.send('<h1>Page not found.</h1>', 404);
+    }
+
+    function handleUserCreate(form){
+      var result = { success: true, message: '' };
+      var messages = [];
+
+      if ( !form['email'] || !form['username'] || !form["password"] || !form["password-2"] ) {
+        result.success = false;
+        messages.push("Missing form values");
+      }
+
+      if ( form["password"] !== form["password-2"] ) {
+        result.success = false;
+        messages.push("Password mismatch");
+      }
+
+      result.message = messages.join('<br />');
+
+      return result;
+    }
+
+    function transformParseUserToProfile(parseUser){
+      var user = { 'email': parseUser.email, 'displayName': parseUser.username || "Name not set" };
+      return user;
     }
 
     // A convenient way to send a page as part of the response.
@@ -72,7 +129,9 @@ module.exports = {
     // just invoke our callback now
     callback();
 
-    // Set up user authentication
+    // ================================================
+    // ============== user authentication =============
+    // ================================================
     function configurePassport()
     {
       var GoogleStrategy = require('passport-google').Strategy;
@@ -102,6 +161,21 @@ module.exports = {
         function(accessToken, refreshToken, profile, done) {
           var user = { 'email': profile.emails[0].value, 'displayName': profile.displayName };
           done(null, user);
+        }
+      ));
+
+      var LocalStrategy = require('passport-local').Strategy;
+      passport.use(new LocalStrategy(
+        function(username, password, done) {
+          // Find the user from your DB (Parse)
+          context.db.loginUser(username, password, function(err, res, body, success) {
+            if (success) {
+              var profile = transformParseUserToProfile(body);
+              done(err, profile);
+            } else {
+              return done(null, false, { message: body.error });
+            }
+          });
         }
       ));
 
@@ -152,6 +226,29 @@ module.exports = {
           // Successful authentication, redirect home.
           res.redirect('/');
         });
+
+      app.post('/', function(req, res, next) {
+        passport.authenticate('local', function(err, user, info) {
+          if (err) { return next(err); }
+
+          if (!user) {
+            req.session.error = info.message;
+            return res.redirect('/');
+          }
+
+          req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+          });
+        })(req, res, next);
+      });
+
+      app.post('/',
+        passport.authenticate('local', { failureRedirect: '/' }),
+        function(req, res) {
+          res.redirect('/');
+        }
+      );
 
       app.get('/logout', function(req, res)
       {

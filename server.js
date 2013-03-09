@@ -1,4 +1,6 @@
 var async = require('async');
+var socketio = require('socket.io');
+var Kaiseki = require('kaiseki');
 
 // Settings for our application. We'll load them from a separate file -
 // our first Node module. Use ./ to access a file in the current
@@ -9,16 +11,11 @@ var async = require('async');
 var context = {};
 context.settings = require('./settings');
 
-async.series([setupView, setupApp, listen], ready); //setupDb, 
+var APP_ID = '9YzDSC51NNz9Rbdb22k3gztMMBgmdvaRrS2gfa0L';
+var REST_API_KEY ='tjMO8OKW0L7PnNc6o1ndJqGYj0uwsGP44jKxqS8G';
+context.db = new Kaiseki(APP_ID, REST_API_KEY);
 
-// function setupDb(callback)
-// {
-//   // Create our database object
-//   context.db = require('./db.js');
-
-//   // Set up the database connection, create context.db.posts object
-//   context.db.init(context, callback);
-// }
+async.series([setupView, setupApp, listen], ready);
 
 function setupView(callback)
 {
