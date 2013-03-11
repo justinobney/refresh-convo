@@ -8,7 +8,7 @@ module.exports = {
   init: function(context, callback) {
     // Create an Express app object to add routes to and add
     // it to the context
-    var app = context.app = express.createServer();
+    var app = context.app = express();
 
     // The express "body parser" gives us the parameters of a 
     // POST request is a convenient req.body object
