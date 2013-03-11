@@ -20,7 +20,7 @@ module.exports = {
     callbackURL: "http://127.0.0.1:3000/auth/github/callback"
   },
   http: {
-    port: 3000
+    port: process.env.PORT || 3000
   },
   // You should use a secret of your own to authenticate session cookies
   sessionSecret: 'sfjnrfunpiu',

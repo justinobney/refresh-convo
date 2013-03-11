@@ -47,7 +47,7 @@ module.exports = {
     app.post('/user/create', function(req, res){
       var result = handleUserCreate(req.body);
       if (!result.success) {
-        
+
         req.sesion = req.session || {};
         req.session.error = result.message;
 
