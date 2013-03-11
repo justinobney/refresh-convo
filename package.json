@@ -1,15 +1,20 @@
 {
   "author": "Justin Obney <justinobney@gmail.com> (http://resume.justinobney.com/)",
-  "name": "Refresh BR Conversations | learning Node JS",
+  "name": "Refresh-BR-Conversations",
   "description": "A project to share links & chat during Refresh BR meetings",
   "version": "0.0.2",
   "dependencies": {
-    "underscore": "~1.3.3",
-    "express": "~2.5.9",
-    "async": "~0.1.18",
-    "ejs": "~0.7.1",
-    "passport": "~0.1.8",
-    "passport-google": "~0.2.0"
+    "underscore": "1.3.x",
+    "express": "3.x",
+    "async": "0.1.22",
+    "ejs": "0.7.2",
+    "connect-ensure-login" : "0.1.0",
+    "kaiseki" : "0.4.0",
+    "passport": "0.1.8",
+    "passport-local" : "0.1.6",
+    "passport-google": "0.2.0",
+    "passport-github" : "0.1.3",
+    "passport-twitter" : "0.1.4"
   },
   "devDependencies": {},
   "optionalDependencies": {},
