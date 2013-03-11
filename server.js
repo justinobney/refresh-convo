@@ -1,5 +1,4 @@
 var async = require('async');
-var socketio = require('socket.io');
 var Kaiseki = require('kaiseki');
 
 // Settings for our application. We'll load them from a separate file -
