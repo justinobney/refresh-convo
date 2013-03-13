@@ -41,3 +41,9 @@ h1
 .user-name:hover {
 	color: #ffffff;
 }
+.user-image {
+	height: 30px;
+	width: 30px;
+	border-radius: 20px;
+	margin: -5px 5px 0 0;
+}

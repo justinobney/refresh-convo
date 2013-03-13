@@ -48,7 +48,8 @@ module.exports = {
     // catch user create post
 
     app.get('*', function(req, res) {
-      notFound(res);
+      page(req, res, '404', {});
+      //notFound(res);
     });
 
     // The notFound function is factored out so we can call it
