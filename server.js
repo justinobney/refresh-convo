@@ -8,7 +8,7 @@ var Kaiseki = require('kaiseki');
 // the application
 
 var context = {};
-context.settings = require('./config/settings-heroku');
+context.settings = require('./config/settings-local');
 
 var APP_ID = '9YzDSC51NNz9Rbdb22k3gztMMBgmdvaRrS2gfa0L';
 var REST_API_KEY ='tjMO8OKW0L7PnNc6o1ndJqGYj0uwsGP44jKxqS8G';
