@@ -30,7 +30,7 @@ module.exports = {
     // nice chrome on the login page
     var auth = require('./lib/auth');
     app.use(auth);
-    auth.configurePassport(context);
+    auth.init(context);
 
     // ================================================
     // ==================   ROUTES    =================
