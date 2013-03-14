@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var express = require('express');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var models = require('./lib/models');
 var view;
 
 module.exports = {
@@ -45,20 +46,46 @@ module.exports = {
       page(req, res, 'chat', {slots : {page: 'chat'}});
     });
 
+    app.post('/link/create', function(req,res){
+      var result = handleLinkCreate(req.body, req.user);
+      if (result.success) {
+        result.link.save(function(){
+          page(req, res, 'index', {});
+        });
+      } else {
+        req.session.error = result.message;
+        res.redirect('/error');
+      }
+    });
+
     // catch user create post
 
     app.get('*', function(req, res) {
       page(req, res, '404', {});
-      //notFound(res);
     });
 
-    // The notFound function is factored out so we can call it
-    // both from the catch-all, final route and if a URL looks
-    // reasonable but doesn't match any actual posts
+    function handleLinkCreate(form, user){
+      var result = { success: true, message: 'Success', link: null };
+      var messages = [];
 
-    function notFound(res)
-    {
-      res.send('<h1>Page not found.</h1>', 404);
+      if ( !form['title'] || !form['url']) {
+        result.success = false;
+        messages.push("Missing required form values");
+      }
+
+      if ( !result.success ) {
+        result.message = messages.join('<br />');
+      } else {
+        result.link = models.Link.create(context.db, {
+          title: form['title'],
+          url: form['url'],
+          description: form['description'],
+          userId: user.objectId,
+          userName: user.username
+        });
+      }
+
+      return result;
     }
 
     // handle user create
