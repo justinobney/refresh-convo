@@ -3,6 +3,7 @@ var express = require('express');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 var models = require('./lib/models');
 var imageService = require('./lib/services/imageService');
+var linkService = require('./lib/services/linkService');
 var view;
 
 module.exports = {
@@ -42,11 +43,14 @@ module.exports = {
     app.get('/', function(req, res) {
       var data = {slots : {links : []}};
 
-      // if (req.user) {
-      //   data.slots.links = linkService.getAll();
-      // }
-
-      page(req, res, 'index', data);
+      if (req.user) {
+        linkService.GetAll(function(links){
+          data.slots.links = links;
+          page(req, res, 'index', data);
+        });
+      } else {
+        page(req, res, 'index', data);
+      }
     });
 
     app.get('/chat', ensureLoggedIn('/'), function(req, res) {
@@ -92,6 +96,11 @@ module.exports = {
       if ( !form['title'] || !form['url']) {
         result.success = false;
         messages.push("Missing required form values");
+      }
+
+      if ( form['url'].indexOf('http://') !== 0 ) {
+        result.success = false;
+        messages.push("Links must begin with http://");
       }
 
       if ( !result.success ) {
