@@ -2,6 +2,7 @@ var _ = require('underscore');
 var express = require('express');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 var models = require('./lib/models');
+var imageService = require('./lib/services/imageService');
 var view;
 
 module.exports = {
@@ -39,7 +40,13 @@ module.exports = {
 
     // Deliver a list of posts when we see just '/'
     app.get('/', function(req, res) {
-      page(req, res, 'index', {});
+      var data = {slots : {links : []}};
+
+      // if (req.user) {
+      //   data.slots.links = linkService.getAll();
+      // }
+
+      page(req, res, 'index', data);
     });
 
     app.get('/chat', ensureLoggedIn('/'), function(req, res) {
@@ -49,12 +56,26 @@ module.exports = {
     app.post('/link/create', function(req,res){
       var result = handleLinkCreate(req.body, req.user);
       if (result.success) {
-        result.link.save(function(){
-          page(req, res, 'index', {});
+        result.link.save(function(data){
+          var objectId = data.objectId;
+
+          console.log("Saving file to PARSE");
+          imageService.SaveUrlScreenshot(data.url, data.title, function(parseFileInfo){
+
+            console.log("PARSE file info");
+            console.log(parseFileInfo.url);
+
+            result.link.update({
+                imageUrl: parseFileInfo.url
+            }, function(err, res, body, success){
+                console.log('object updated at = ', body.updatedAt);
+            });
+          });
+          res.redirect('/');
         });
       } else {
         req.session.error = result.message;
-        res.redirect('/error');
+        res.redirect('/');
       }
     });
 
