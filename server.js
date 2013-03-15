@@ -33,7 +33,8 @@ function setupApp(callback)
 // Ready to roll - start listening for connections
 function listen(callback)
 {
-  context.app.listen(context.settings.http.port);
+  //console.log(context.server);
+  context.server.listen(context.settings.http.port);
   callback(null);
 }
 

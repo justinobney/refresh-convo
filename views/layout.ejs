@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/static/css/fontello.css">
   <!--[if IE 7]><link rel="stylesheet" href="/static/css/fontello-ie7.css"><![endif]-->
   <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body class="<%- slots.bodyClass %>">
   <div class="navbar">
@@ -41,5 +42,18 @@
   <script type="text/javascript" src="/static/js/MD5.js"></script>
   <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/static/js/bootbox.min.js"></script>
+  <script>
+    var socket = io.connect('http://localhost');
+    socket.on('link:imageUpdate', function (data) {
+      
+      // {
+      //   objectId: "KB1p3sKD3j", 
+      //   imageUrl: "http://files.parse.com/c5b396ee-1ff8-4dd9-b632-cef…558-af76-3559edd33edc-1363335869978_socket_io.jpg"
+      // }
+      
+      var selector = '#link_' + data.objectId;
+      $(selector).find('.website-preview').attr('src', data.imageUrl);
+    });
+  </script>
 </body>
 </html>

@@ -1,9 +1,11 @@
 var _ = require('underscore');
 var express = require('express');
+var http = require('http');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 var models = require('./lib/models');
 var imageService = require('./lib/services/imageService');
 var linkService = require('./lib/services/linkService');
+
 var view;
 
 module.exports = {
@@ -11,6 +13,17 @@ module.exports = {
     // Create an Express app object to add routes to and add
     // it to the context
     var app = context.app = express();
+    var server = context.server = http.createServer(app);
+    var io = require('socket.io').listen(server, { log: false });
+
+    io.configure(function () {
+      io.set("transports", ["xhr-polling"]);
+      io.set("polling duration", 10);
+    });
+
+    // io.sockets.on('connection', function (socket) {
+    //   socket.emit('news', { hello: 'world' });
+    // });
 
     // The express "body parser" gives us the parameters of a 
     // POST request is a convenient req.body object
@@ -68,6 +81,11 @@ module.exports = {
 
             console.log("PARSE file info");
             console.log(parseFileInfo.url);
+
+            io.sockets.emit('link:imageUpdate', {
+              objectId: objectId,
+              imageUrl: parseFileInfo.url
+            });
 
             result.link.update({
                 imageUrl: parseFileInfo.url
