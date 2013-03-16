@@ -1,0 +1,21 @@
+<% _.each(links, function(link) { %>
+
+  <div class="row-fluid" id="link_<%= link.objectId %>">
+    <div class="span12 well">
+      <div class="row-fluid">
+        <div class="span2">
+          <a href="#" class="thumbnail">
+            <img class="website-preview" src="<%= link.imageUrl %>" alt="<%= link.title %>">
+          </a>
+          <p class="label user-name"><%= link.userName %></p> 
+        </div>
+        <div class="span10">
+          <strong><a href="<%= link.url %>" target="_blank"><%= link.title %></a></strong>
+          <br>
+          <p><%= link.description %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% }) %>

@@ -76,11 +76,13 @@ module.exports = {
         result.link.save(function(data){
           var objectId = data.objectId;
 
-          console.log("Saving file to PARSE");
-          imageService.SaveUrlScreenshot(data.url, data.title, function(parseFileInfo){
+          linkService.GetAll(function(links){
+              io.sockets.emit('link:linkAdded', {
+                links: links
+              });
+            });
 
-            console.log("PARSE file info");
-            console.log(parseFileInfo.url);
+          imageService.SaveUrlScreenshot(data.url, data.title, function(parseFileInfo){
 
             io.sockets.emit('link:imageUpdate', {
               objectId: objectId,
@@ -93,7 +95,17 @@ module.exports = {
                 console.log('object updated at = ', body.updatedAt);
             });
           });
-          res.redirect('/');
+          if (req.headers['x-requested-with'] == 'XMLHttpRequest') {
+
+            linkService.GetAll(function(links){
+              var data = { links : [] };
+              data.links = links;
+              partial(req, res, 'sharedLinks', data);
+            });
+
+          } else {
+            res.redirect('/');
+          }
         });
       } else {
         req.session.error = result.message;
@@ -151,6 +163,13 @@ module.exports = {
       _.defaults(data, { slots: {} });
       _.defaults(data.slots, { user: req.user, session: req.session });
       res.send(view.page(template, data));
+    }
+
+    function partial(req, res, template, data)
+    {
+      _.defaults(data, { slots: {} });
+      _.defaults(data.slots, { user: req.user, session: req.session });
+      res.send(view.partial(template, data));
     }
 
     // We didn't have to delegate to anything time-consuming, so
