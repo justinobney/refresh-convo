@@ -56,7 +56,7 @@
 <% _.each(links, function(link) { %>
 
   
-    <div class="span3 item" id="link_<%= link.objectId %>" data-created="<%= link.updatedAt %>" data-likes="<%= link.likes || 0 %>">
+    <div class="span3 item" id="link_<%= link.objectId %>" data-created="<%= link.createdAt %>" data-likes="<%= link.likes || 0 %>">
       <div class="well">
         <div class="preview-wrapper">
           <div class="overlay"></div>
