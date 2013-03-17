@@ -283,3 +283,10 @@ h1 {
 	border-color: #A30101;
 	background: #F8F8F8;
 }
+
+.github-fork-ribbon {
+	background-color: #0C0808 !important;
+}
+.github-fork-ribbon-wrapper {
+	z-index: 9;
+}
