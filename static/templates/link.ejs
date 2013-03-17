@@ -1,17 +1,34 @@
-<div class="span3 item" id="link_<%= link.objectId %>" data-created="<%= link.updatedAt %>">
+<div class="span3 item" id="link_<%= link.objectId %>" data-created="<%= link.updatedAt %>" data-likes="<%= link.likes || 0 %>">
   <div class="well">
-    <div style="position: relative;">
+    <div class="preview-wrapper">
+      <div class="overlay"></div>
       <a href="#" class="thumbnail">
         <img class="website-preview" src="<%= link.imageUrl %>" alt="<%= link.title %>">
       </a>
       <p class="label user-name"><%= link.userName %></p>
       <div class="circle-mod">
         <div class="container-circle">
-          <div id="button-1" class="circle-btn"></div>
-          <div id="button-2" class="circle-btn"></div>
-          <div id="button-3" class="circle-btn"></div>
-          <div id="button-4" class="circle-btn"></div>
-          <div id="button-5" class="circle-btn" ></div>
+          <div class="button-1 circle-btn facebook">
+            <div>
+              <a href="#facebook"><i class="icon-facebook"></i></a>
+            </div>
+          </div>
+          <div class="button-2 circle-btn twitter">
+            <div>
+              <a href="#twitter"><i class="icon-twitter"></i></a>
+            </div>
+          </div>
+          <div class="button-3 circle-btn like">
+            <div>
+              <a href="#like"><i class="icon-heart-empty"></i></a>
+            </div>
+          </div>
+          <div class="button-4 circle-btn share">
+            <div>
+              <a href="#share"><i class="icon-export"></i></a>
+            </div>
+          </div>
+          <!-- <div class="button-5 circle-btn" ></div> -->
           <div class="base-button">
             <div><span>+</span></div>
           </div>

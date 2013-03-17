@@ -97,6 +97,10 @@ h1
           transition-duration: 0s;
 }
 
+.preview-wrapper {
+	position: relative;
+}
+
 /*  Circle buttons */
 
 /* Move whole container to bottom left corner */
@@ -110,6 +114,17 @@ h1
 	display: block;
 }
 
+.item:hover .overlay {
+	opacity: 0.5;
+}
+
+.overlay {
+	background: #000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	opacity: 0;
+}
 /* Make a relative container */
 .container-circle {
 	display: none;
@@ -135,6 +150,7 @@ h1
     position: absolute;
     height: 30px;
     width: 30px;
+    line-height: 30px;
     border-radius: 25px;
     top: 5px;
     left: 5px;
@@ -149,27 +165,31 @@ h1
     box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 }
 
-#button-1.open{
-    top: -125px;
-    left: 25px;
+.circle-btn a {
+	padding-left: 4px;
 }
 
-#button-2.open{
-    top: -105px;
-    left: 80px;
+.button-1.open{
+    top: -90px;
+    left: 20px;
 }
 
-#button-3.open{
-    top: -75px;
-    left: 125px;
+.button-2.open{
+    top: -70px;
+    left: 75px;
 }
 
-#button-4.open{
-    top: -30px;
-    left: 160px;
+.button-3.open{
+    top: -35px;
+    left: 115px;
 }
 
-#button-5.open{
+.button-4.open{
+    top: 10px;
+    left: 140px;
+}
+
+.button-5.open{
     left: 175px;
     top: 25px;
 }
@@ -217,4 +237,36 @@ h1
 	-moz-transform: rotate(765deg);
 	-o-transform: rotate(765deg);
 	-ms-transform: rotate(765deg);
+}
+
+.circle-btn.facebook a {
+	color: #FFF;
+}
+
+.circle-btn.facebook {
+	background: rgb(50, 3, 202);
+}
+
+.circle-btn.twitter a {
+	color: #FFF;
+}
+
+.circle-btn.twitter {
+	background: rgb(3, 178, 202);
+}
+
+.circle-btn.like a {
+	color: #FFF;
+}
+
+.circle-btn.like {
+	background: rgb(202, 3, 3);
+}
+
+.circle-btn.share a {
+	color: #FFF;
+}
+
+.circle-btn.share {
+	background: rgb(0, 0, 0);
 }
