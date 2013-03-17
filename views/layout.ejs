@@ -31,15 +31,15 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid">
+  <div class="container">
     <!-- %- partial('crumbs', {}) % -->
-    <%- partial('feedback', {}) %>
-    <div class="row-fluid">
+    <div class="row">
       <div class="span12">
+        <%- partial('feedback', {}) %>
         <!-- <h1><%= slots.title %></h1> -->
-        <%- slots.body %>
       </div>
     </div>
+    <%- slots.body %>
   </div>
   <!-- Scripts at the end, for faster page load -->
   <script type="text/javascript" src="/static/js/MD5.js"></script>

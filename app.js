@@ -76,11 +76,9 @@ module.exports = {
         result.link.save(function(data){
           var objectId = data.objectId;
 
-          linkService.GetAll(function(links){
-              io.sockets.emit('link:linkAdded', {
-                links: links
-              });
-            });
+          io.sockets.emit('link:linkAdded', {
+            link: data
+          });
 
           imageService.SaveUrlScreenshot(data.url, data.title, function(parseFileInfo){
 
@@ -96,13 +94,9 @@ module.exports = {
             });
           });
           if (req.headers['x-requested-with'] == 'XMLHttpRequest') {
-
-            linkService.GetAll(function(links){
-              var data = { links : [] };
-              data.links = links;
-              partial(req, res, 'sharedLinks', data);
-            });
-
+            // do nothing
+            res.writeHead(200, {'Content-Type': 'text/event-stream'});
+            res.end();
           } else {
             res.redirect('/');
           }

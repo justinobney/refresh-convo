@@ -47,3 +47,174 @@ h1
 	border-radius: 20px;
 	margin: -5px 5px 0 0;
 }
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+/*  Circle buttons */
+
+/* Move whole container to bottom left corner */
+.circle-mod{
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+}
+
+.item:hover .container-circle {
+	display: block;
+}
+
+/* Make a relative container */
+.container-circle {
+	display: none;
+	position: relative;
+	height: 75px;
+	width: 100px;
+}
+/*Create my base button*/
+.base-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+    height: 40px;
+    width: 40px;
+    background: #ddd;
+    /* Some extra styles, add -webkit prefix to work on most mobile browsers */
+    box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+    padding: 0;
+}
+/* Generic button and center position */
+.circle-btn{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border-radius: 25px;
+    top: 5px;
+    left: 5px;
+    background: #ccc;
+    /* Essential to the animation */
+    -webkit-transition: all 250ms;
+    -moz-transition: all 250ms;
+    -o-transition: all 250ms;
+    -ms-transition: all 250ms;
+    transition: all 250ms;
+    /* Same as above */
+    box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+}
+
+#button-1.open{
+    top: -125px;
+    left: 25px;
+}
+
+#button-2.open{
+    top: -105px;
+    left: 80px;
+}
+
+#button-3.open{
+    top: -75px;
+    left: 125px;
+}
+
+#button-4.open{
+    top: -30px;
+    left: 160px;
+}
+
+#button-5.open{
+    left: 175px;
+    top: 25px;
+}
+
+.base-button div {
+	margin: 4px;
+	height: 30px;
+	width: 30px;
+	background: #db3a2b;
+	background: -moz-linear-gradient(top, #db3a2b 0%, #cf0404 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#db3a2b), color-stop(100%,#cf0404));
+	background: -webkit-linear-gradient(top, #db3a2b 0%,#cf0404 100%);
+	background: -o-linear-gradient(top, #db3a2b 0%,#cf0404 100%);
+	background: -ms-linear-gradient(top, #db3a2b 0%,#cf0404 100%);
+	background: linear-gradient(top, #db3a2b 0%,#cf0404 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#db3a2b', endColorstr='#cf0404',GradientType=0 );
+	border-radius: 45px;
+	border: 1px solid #cf0404;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	font-size: 30px;
+	font-weight: 700;
+	padding: 0;
+}
+
+.base-button div span {
+	height: 30px;
+	display: block;
+	-webkit-transition: all 400ms;
+	-moz-transition: all 400ms;
+	-o-transition: all 400ms;
+	-ms-transition: all 400ms;
+	transition: all 400ms;
+	-webkit-transform: rotate(0);
+	-moz-transform: rotate(0);
+	-o-transform: rotate(0);
+	-ms-transform: rotate(0);
+	transform: rotate(0);
+}
+
+.base-button.open div span {
+	transform: rotate(765deg);
+	-webkit-transform: rotate(765deg);
+	-moz-transform: rotate(765deg);
+	-o-transform: rotate(765deg);
+	-ms-transform: rotate(765deg);
+}

@@ -1,0 +1,27 @@
+<div class="span3 item" id="link_<%= link.objectId %>" data-created="<%= link.updatedAt %>">
+  <div class="well">
+    <div style="position: relative;">
+      <a href="#" class="thumbnail">
+        <img class="website-preview" src="<%= link.imageUrl %>" alt="<%= link.title %>">
+      </a>
+      <p class="label user-name"><%= link.userName %></p>
+      <div class="circle-mod">
+        <div class="container-circle">
+          <div id="button-1" class="circle-btn"></div>
+          <div id="button-2" class="circle-btn"></div>
+          <div id="button-3" class="circle-btn"></div>
+          <div id="button-4" class="circle-btn"></div>
+          <div id="button-5" class="circle-btn" ></div>
+          <div class="base-button">
+            <div><span>+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <strong><a href="<%= link.url %>" target="_blank"><%= link.title %></a></strong>
+      <br>
+      <p><%= link.description %></p>
+    </div>
+  </div>
+</div>
