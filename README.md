@@ -22,6 +22,14 @@ Quick Feature List
 		* Cropped image is saved to parse
 		* Corresponding link is updated with new imageUrl
 		* New imageUrl is broadcast via Socket.io -> Page updates
+* Link on hover actions:
+	* Spin out menu like Path
+	* Share to: Facebook, Twitter - TODO
+	* Like system - TODO
+	* Open link - TODO
+* Show user gravatar
+* Show links in "read-only" when user not logged in (stole idea from Dave)
+* Global 404 page..
 
 TODO:
 ---

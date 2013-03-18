@@ -1,0 +1,7 @@
+<% slots.title = "Learning Node" %>
+
+<% if(slots.user) { %>
+    <%- partial('secret', {}) %>
+<% } else { %>
+	<%- partial('public_index', {}) %>	
+<% } %>

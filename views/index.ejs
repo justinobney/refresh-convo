@@ -1,7 +1,96 @@
-<% slots.title = "Learning Node" %>
+<script type="text/javascript" src="/static/js/jquery.isotope.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.smartresize.js"></script>
 
-<% if(slots.user) { %>
-    <%- partial('secret', {}) %>
-<% } else { %>
-	<%- partial('public_index', {}) %>	
-<% } %>
+<script src="http://javascriptmvc.com/jquery/dist/jquery.view.ejs.min.js"></script>
+
+<div class="row" id="links">
+      <%- partial('sharedLinks', {links: slots.links}) %>
+</div>
+<script>
+  function reLayout(){
+    $('#links').isotope( 'reLayout', $.noop );
+  }
+
+  socket.on('link:imageUpdate', function (data) {
+    
+    // { objectId: "KB1p3sKD3j",  imageUrl: "http://files.parse.com/SOME_GUID-FILE_NAME.jpg" }
+    var selector = '#link_' + data.objectId;
+    $(selector).find('.website-preview').attr('src', data.imageUrl);
+    setTimeout(reLayout, 1000);
+  });
+
+  socket.on('link:linkAdded', function (data) {
+    //$('#newLinkForm').after('/static/templates/link.ejs', data);
+    var item = $.View('/static/templates/link.ejs', data);
+    $('#links').isotope( 'insert', $(item) );
+    $('#links').isotope( 'updateSortData', $('.item') );
+    setTimeout(reLayout, 1000);
+  });
+
+  setTimeout(function(){
+    var links = $('#links');
+    // Isotopize the posts.
+    links.isotope({
+      itemSelector : '.item',
+      getSortData : {
+        date : function ( $elem ) {
+          return new Date( $elem.data('created') );
+        }
+      },
+      sortBy : 'date',
+      sortAscending : false
+    });
+  }, 500);
+
+  $(function(){
+      $(window).smartresize(reLayout);
+
+      var delay = 40, delayTime;
+      //FLy out menu
+      $(document).on('click', '.base-button', function(){
+        var el = $(this);
+        var btns = el.closest('.container-circle').find('.circle-btn');
+        // if not open
+        if ( !el.hasClass('open') ) {
+          el.addClass('open');
+          btns.each(function(i){
+            var ele = $(this);
+            delayTime = i * delay;      
+            window.setTimeout(function(){
+              ele.addClass('open');
+            }, delayTime);
+          });
+        } else { 
+        // if open
+          el.removeClass('open');
+          $($(btns).get().reverse()).each(function(i){
+            //This is the same
+            var ele = $(this);
+            delayTime = i * delay;
+            //ditto
+            window.setTimeout(function(){
+              //Now let remove the class 'open'
+              ele.removeClass('open');
+            }, delayTime);   
+          });
+        }
+      });
+
+      $(document).on('click', '.circle-btn.like a', function(){
+        var el = $(this);
+        var item = el.closest('.item');
+
+        var linkId = item[0].id.replace('link_', '');
+        var url = '/link/like/' + linkId;
+        console.log(url);
+        //$.post(, {favorite: ''})
+      });
+
+      $(document).on('mouseleave', '.preview-wrapper', function(e){
+        var el = $(this);
+        el.find('.open').removeClass('open');
+      });
+  })
+
+
+</script>

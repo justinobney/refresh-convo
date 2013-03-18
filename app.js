@@ -56,14 +56,10 @@ module.exports = {
     app.get('/', function(req, res) {
       var data = {slots : {links : []}};
 
-      if (req.user) {
-        linkService.GetAll(function(links){
-          data.slots.links = links;
-          page(req, res, 'index', data);
-        });
-      } else {
+      linkService.GetAll(function(links){
+        data.slots.links = links;
         page(req, res, 'index', data);
-      }
+      });
     });
 
     app.get('/chat', ensureLoggedIn('/'), function(req, res) {

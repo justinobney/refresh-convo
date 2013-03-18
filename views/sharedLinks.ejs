@@ -1,40 +1,55 @@
   <div class="span3 item" id="newLinkForm" data-created="<%= new Date('1-1-2025') %>">
     <div class="well">
-      <form method="POST" action="/link/create" id="formShareLink">
-        <fieldset>
-          <div id="legend">
-            <legend>Refreshing Links</legend>
-          </div>
-          <div class="control-group">
-            <!-- Text input-->
-            <label class="control-label" for="input01">Title</label>
-            <div class="controls">
-              <input type="text" placeholder="What is it?" class="input-block-level" id="title" name="title"> 
+      <% if(slots.user) { %>
+        <form method="POST" action="/link/create" id="formShareLink">
+          <fieldset>
+            <div id="legend">
+              <legend>Refreshing Links</legend>
             </div>
-          </div>
-          <div class="control-group">
-            <!-- Text input-->
-            <label class="control-label" for="input01">URL</label>
-            <div class="controls">
-              <input type="text" placeholder="http://" class="input-block-level" id="url" name="url">
-              <p class="help-block"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <!-- Textarea -->
-            <label class="control-label">More Info</label>
-            <div class="controls">
-              <div class="textarea">
-                <textarea type="" style="margin-left: 0px; margin-right: 0px;" class="input-block-level" id="description" name="description"></textarea>
+            <div class="control-group">
+              <!-- Text input-->
+              <label class="control-label" for="input01">Title</label>
+              <div class="controls">
+                <input type="text" placeholder="What is it?" class="input-block-level" id="title" name="title"> 
               </div>
             </div>
-
-            <div class="controls">
-              <button class="btn btn-primary btn-block" type="submit">Share Link</button>
+            <div class="control-group">
+              <!-- Text input-->
+              <label class="control-label" for="input01">URL</label>
+              <div class="controls">
+                <input type="text" placeholder="http://" class="input-block-level" id="url" name="url">
+                <p class="help-block"></p>
+              </div>
             </div>
-          </div>
-        </fieldset>
-      </form>
+            <div class="control-group">
+              <!-- Textarea -->
+              <label class="control-label">More Info</label>
+              <div class="controls">
+                <div class="textarea">
+                  <textarea type="" style="margin-left: 0px; margin-right: 0px;" class="input-block-level" id="description" name="description"></textarea>
+                </div>
+              </div>
+
+              <div class="controls">
+                <button class="btn btn-primary btn-block" type="submit">Share Link</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      <% } else { %>
+        <h1>Sign in to share!</h1>
+        <form method="post" action="/" accept-charset="UTF-8">
+          <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="username" name="username">
+          <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">
+          <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+          <label class="string optional" for="user_remember_me"> Remember me</label>
+          <input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In">
+        </form>
+        <div class="divider"></div>
+              <!-- <i class="icon-facebook"></i> -->
+        <a class="btn btn-block" data-group="oauth-btn" href="/auth/github" id="sign-in-github"><i class="fontello icon-github"></i> Sign In with GitHub</a>
+        <a class="btn btn-block" data-group="oauth-btn" href="/auth/google" id="sign-in-google"><i class="fontello icon-google"></i> Sign In with Google</a>
+      <% } %>
 
       <script>
         $('#formShareLink').submit(function(e){
