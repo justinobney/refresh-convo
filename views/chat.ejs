@@ -36,7 +36,6 @@
 	});
 
 	socket.on('chat:messageReceived', function (data) {
-		console.log(data);
 	    var container = $('#chat-log');
 	    var item = $.View('/static/templates/message.ejs', data);
 	    container.prepend(item)
