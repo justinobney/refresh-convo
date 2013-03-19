@@ -21,9 +21,7 @@ module.exports = {
       io.set("polling duration", 10);
     });
 
-    // io.sockets.on('connection', function (socket) {
-    //   socket.emit('news', { hello: 'world' });
-    // });
+    require('./lib/util');
 
     // The express "body parser" gives us the parameters of a 
     // POST request is a convenient req.body object
@@ -66,7 +64,7 @@ module.exports = {
       });
     });
 
-    app.get('/chat', ensureLoggedIn('/'), function(req, res) {
+    app.get('/chat', ensureLoggedIn("/"), function(req, res) {
 
       page(req, res, 'chat', {
         slots : {
@@ -76,7 +74,7 @@ module.exports = {
       });
     });
 
-    app.post('/link/create', function(req,res){
+    app.post('/link/create', ensureLoggedIn("/"), function(req,res){
       var result = handleLinkCreate(req.body, req.user);
       if (result.success) {
         result.link.save(function(data){

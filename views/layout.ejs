@@ -14,9 +14,17 @@
   <!--[if IE 7]><link rel="stylesheet" href="/static/css/fontello-ie7.css"><![endif]-->
   <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
   <script src="http://javascriptmvc.com/jquery/dist/jquery.view.ejs.min.js"></script>
+  <script type="text/javascript" src="/static/js/moment.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io.connect();
+
+    moment.fn.twitter = function () {
+      var diff = moment().diff(this, 'seconds');
+      return diff < 60 ? diff + 's' :
+        diff < 3600 ? ~~(diff / 60) + ' min' :
+        diff < 86400 ? ~~(diff / 3600) + ' hr' : this.format('D MMM');
+    };
   </script>
 </head>
 <body class="<%- slots.bodyClass %>">

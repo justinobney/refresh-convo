@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="span2">
-		<img class="user-image" src="http://critterapp.pagodabox.com/img/user.jpg" alt="" data-email="<%= chat.user.email %>">
-		<%= chat.user.displayName %>
+	<div class="span3">
+		<div class="pull-right">
+			<img class="user-image" src="http://critterapp.pagodabox.com/img/user.jpg" alt="" data-email="<%= chat.user.email %>">
+			<%= chat.user.displayName %>
+			[ <%= moment(chat.time).twitter() %> ]
+		</div>
 	</div>
-	<div class="span2">
-		<%= chat.time.toString() %>
-	</div>
-	<div class="span8">
+	<div class="span9">
 		<%= chat.body %>	
 	</div>
 </div>
