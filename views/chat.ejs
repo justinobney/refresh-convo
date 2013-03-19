@@ -1,4 +1,44 @@
-<div class="input-append">
-	<input class="" id="appendedInputButtons" placeholder="What up yo?" type="text" style="width: 85%;">
-	<button class="btn btn-primary" type="button" style="width: 14%; padding: 4px 14px 5px;">Send</button>
+<form action="/chat/sendMessage" method="post" id="chat-form">
+	<div class="input-append">
+		<input class="" id="chat-message" name="chat-message" placeholder="What up yo?" type="text" style="width: 85%;">
+		<button class="btn btn-primary" type="submit" style="width: 14%; padding: 4px 14px 5px;">Send</button>
+	</div>
+</form>
+
+<div id="chat-log">
+	<% _.each(slots.chats, function(chat) { %>
+		<div class="row">
+			<div class="span2">
+				<img class="user-image" src="http://critterapp.pagodabox.com/img/user.jpg" alt="" data-email="<%= chat.user.email %>">
+				<%= chat.user.displayName %>
+			</div>
+			<div class="span2">
+				<%= chat.time.toString() %>
+			</div>
+			<div class="span8">
+				<%= chat.body %>	
+			</div>
+		</div>
+	<% }) %>
 </div>
+
+<script>
+	$(document).on('submit', '#chat-form', function(e){
+		e.preventDefault();
+		var form = $(this);
+		
+		var url = form[0].action;
+		var data = form.serialize();
+
+		$.post(url, data, function(){
+			$('#chat-message').val('');
+		});
+	});
+
+	socket.on('chat:messageReceived', function (data) {
+		console.log(data);
+	    var container = $('#chat-log');
+	    var item = $.View('/static/templates/message.ejs', data);
+	    container.prepend(item)
+	  });
+</script>

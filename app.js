@@ -14,7 +14,7 @@ module.exports = {
     // it to the context
     var app = context.app = express();
     var server = context.server = http.createServer(app);
-    var io = require('socket.io').listen(server, { log: false });
+    var io = context.io = require('socket.io').listen(server, { log: false });
 
     io.configure(function () {
       io.set("transports", ["xhr-polling"]);
@@ -48,6 +48,10 @@ module.exports = {
     app.use(auth);
     auth.init(context);
 
+    var chat = require('./lib/chat');
+    app.use(chat);
+    chat.init(context);
+
     // ================================================
     // ==================   ROUTES    =================
     // ================================================
@@ -63,7 +67,13 @@ module.exports = {
     });
 
     app.get('/chat', ensureLoggedIn('/'), function(req, res) {
-      page(req, res, 'chat', {slots : {page: 'chat'}});
+
+      page(req, res, 'chat', {
+        slots : {
+          page: 'chat',
+          chats: chat.getChats()
+        }
+      });
     });
 
     app.post('/link/create', function(req,res){
