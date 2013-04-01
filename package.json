@@ -20,7 +20,9 @@
     "socket.io": "0.9.13",
     "moment": "~2.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "0.8.x",
