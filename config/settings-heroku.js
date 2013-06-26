@@ -7,7 +7,7 @@ module.exports = {
     consumerKey: 'BQivLThJOjZPET3uMYeNqw',
     consumerSecret: 'ZWuqetEzKriWgMlgyC2HeuSShj2OOHfExC76TSqLwA',
     // Hint: point this to 127.0.0.1 via /etc/hosts for easy testing with a
-    // URL that Twitter will accept. On your production server change to 
+    // URL that Twitter will accept. On your production server change to
     // a real hostname. I have two apps registered with Twitter,
     // justjs (the real one) and devjustjs (for testing on my own computer)
     callbackURL: 'http://jobney-refresh.herokuapp.com/auth/twitter/callback'
@@ -17,7 +17,8 @@ module.exports = {
     //var GITHUB_CLIENT_SECRET = "7dbc72cd458e1258d640a8648d5c85e61ded76dc";
     clientID: '26504acf98eae0ca8245',
     clientSecret: '7dbc72cd458e1258d640a8648d5c85e61ded76dc',
-    callbackURL: "http://jobney-refresh.herokuapp.com/auth/github/callback"
+    callbackURL: "http://jobney-refresh.herokuapp.com/auth/github/callback",
+    customHeaders: {"User-Agent": "justinobney/learn-nodejs"}
   },
   http: {
     port: process.env.PORT || 3000
